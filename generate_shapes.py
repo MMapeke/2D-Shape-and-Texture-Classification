@@ -1,5 +1,6 @@
 import turtle 
 import shapes
+from tqdm import tqdm
 
 class ShapeGenerator:
 
@@ -26,6 +27,6 @@ class ShapeGenerator:
             self.shapes.append(generator(destination,self.painter)) 
 
     def generate_shapes(self):
-        for _ in range(self.num_images):
+        for _ in tqdm (range (self.num_images), desc="Loading..."):
             for shape in self.shapes:
                 shape.generate()

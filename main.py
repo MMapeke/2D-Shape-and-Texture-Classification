@@ -1,6 +1,7 @@
 import os 
 import texture_gen
-import glob 
+import glob
+from tqdm import tqdm 
 
 from generate_shapes import ShapeGenerator
 from skimage import io, color, img_as_float32
@@ -9,9 +10,9 @@ def main():
     # Generate 2d Shape Images
     # DATASETS: 3 Shapes, 5 Shapes, 5 Shapes w/ Random Size
 
-    num_images = 350 # Number of images per each shape
+    num_images = 1000 # Number of images per each shape
     # Destination path for original 2D images
-    destination_orig = "./datasets/three_shapes/original/" 
+    destination_orig = "./datasets/three_shapes_large/original/" 
     print("Generating Images and saving to " + destination_orig)
 
     generator = ShapeGenerator(destination_orig, num_images)
@@ -19,14 +20,14 @@ def main():
     
     # Apply Textures to Images
     # NOTE: destination_textured should end in '/'
-    destination_textured = "./datasets/three_shapes/textured/" 
+    destination_textured = "./datasets/three_shapes_large/textured/" 
     print("Generating Texutes and saving to " + destination_textured)
     textures, t_names = texture_gen.load_textures()
 
     # Load original image shapes + generate new images to save
     data_path = os.path.join(destination_orig,'*g') 
     files = glob.glob(data_path) 
-    for f1 in files: 
+    for f1 in tqdm(files, desc="Loading..."): 
         img = io.imread(f1, as_gray = True)
         # print(img.shape)
         img = img_as_float32(img)
@@ -36,6 +37,5 @@ def main():
     # TODO: Learning and Classification
      
 
-# TODO: next commit datasets in zip + all the code
 if __name__ == '__main__':
     main()
