@@ -1,23 +1,34 @@
-import numpy as np 
-from skimage import io, color, img_as_float32
-import matplotlib.pyplot as plt
 import texture_gen
+from generate_shapes import ShapeGenerator
 
 def main():
-    # ASSUMING GRAYSCALE FOR EVERYTHING RN
+    # Generate 2d Shape Images
+    # DATASETS: 3 Shapes, 5 Shapes, 5 Shapes w/ Random Size
 
-    # Load and display Test File
-    img = io.imread("sample-shape.png", as_gray = True)
-    img = img_as_float32(img)
-    plt.imshow(img, cmap="gray")
-    plt.show()
+    num_images = 2 # Number of images per each shape
+    # Destination path for original 2D images
+    destination_orig = "./datasets/three_shapes/original" 
+    print("Generating Images and saving to " + destination_orig)
+
+    generator = ShapeGenerator(destination, num_images)
+    generator.generate_shapes()
     
-    # Loads and displays textured shapes
-    new_images = texture_gen.generate_textures(img)
-    for texture in new_images:
-        plt.imshow(texture, cmap="gray")
-        plt.show()
+    # Apply Textures to Images
+    destination_textured = "./datasets/three_shapes/textured" 
+    textures, t_names = texture_gen.load_textures()
 
+    # Load original image shapes + generate new images to save
+    data_path = os.path.join(destination_orig,'*g') 
+    files = glob.glob(data_path) 
+    for f1 in files: 
+        img = io.imread(f1, as_gray = True)
+        # print(img.shape)
+        img = img_as_float32(img)
+        
+        texture_gen.generate_textures(img, textures)
+
+    # TODO: Learning and Classification
+     
 
 if __name__ == '__main__':
     main()
