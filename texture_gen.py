@@ -50,6 +50,13 @@ def save_images(images, img_name, t_names, dest):
 
     for img,texture in zip(images,t_names):
         # Generate Name w/ UUID
-        filename  = shape + "_" + texture + "_" + str(uuid.uuid1()) + ".png"
+        label = shape.lower() + "_" + texture
+        filename  = str(uuid.uuid1()) + ".png"
         # Save Image in Dest
-        Image.fromarray(img).convert("L").save(dest + filename)
+        new_path = dest + label + "/"
+        try:
+            os.mkdir(new_path)
+        except:
+            pass
+        
+        Image.fromarray(img).convert("L").save(new_path + filename)

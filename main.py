@@ -10,9 +10,9 @@ def main():
     # Generate 2d Shape Images
     # DATASETS: 3 Shapes, 5 Shapes, 5 Shapes w/ Random Size
 
-    num_images = 1000 # Number of images per each shape
+    num_images = 500 # Number of images per each shape
     # Destination path for original 2D images
-    destination_orig = "./datasets/three_shapes_large/original/" 
+    destination_orig = "./datasets/three_shapes/" 
     print("Generating Images and saving to " + destination_orig)
 
     generator = ShapeGenerator(destination_orig, num_images)
@@ -20,7 +20,7 @@ def main():
     
     # Apply Textures to Images
     # NOTE: destination_textured should end in '/'
-    destination_textured = "./datasets/three_shapes_large/textured/" 
+    destination_textured = "./datasets/three_shapes_t/" 
     print("Generating Texutes and saving to " + destination_textured)
     textures, t_names = texture_gen.load_textures()
 
@@ -34,8 +34,8 @@ def main():
         
         texture_gen.generate_textures(img, f1, textures, t_names, destination_textured)
 
-    # TODO: Learning and Classification
-     
+    # Learning and Classification
+    # TODO: Setup to point where I'm just tweaking the model
 
 if __name__ == '__main__':
     main()
