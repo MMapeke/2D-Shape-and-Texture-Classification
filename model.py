@@ -23,8 +23,8 @@ ds_train = tf.keras.preprocessing.image_dataset_from_directory(
     batch_size = batch_size,
     image_size = (img_height, img_width),
     shuffle = True,
-    seed = 123,
-    validation_split = 0.2,
+    seed = 3,
+    validation_split = 0.1,
     subset = "training"
 )
 
@@ -36,8 +36,8 @@ ds_validation = tf.keras.preprocessing.image_dataset_from_directory(
     batch_size = batch_size,
     image_size = (img_height, img_width),
     shuffle = True,
-    seed = 123,
-    validation_split = 0.2,
+    seed = 3,
+    validation_split = 0.1,
     subset = "validation"
 )
 
@@ -56,8 +56,9 @@ model = keras.Sequential([
   layers.Conv2D(64, 3, padding='same', activation='relu'),
   layers.MaxPooling2D(),
   layers.Flatten(),
-  layers.Dropout(0.2),
+  layers.Dropout(0.4),
   layers.Dense(128, activation='relu'),
+  layers.Dense(64, activation="relu"),
   layers.Dense(num_classes, activation="softmax")
 ])
 
@@ -67,7 +68,7 @@ model.compile(optimizer=keras.optimizers.Adam(),
 
 model.summary()
 
-num_epochs = 10
+num_epochs = 7
 history = model.fit(
   ds_train,
   epochs=num_epochs,
@@ -86,16 +87,17 @@ epochs_range = range(num_epochs)
 plt.figure(figsize=(8, 8))
 plt.subplot(1, 2, 1)
 plt.plot(epochs_range, acc, label='Training Accuracy')
-plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+plt.plot(epochs_range, val_acc, label='Testing Accuracy')
 plt.legend(loc='lower right')
-plt.title('Training and Validation Accuracy')
+plt.title('Training and Testing Accuracy')
 
 plt.subplot(1, 2, 2)
 plt.plot(epochs_range, loss, label='Training Loss')
-plt.plot(epochs_range, val_loss, label='Validation Loss')
+plt.plot(epochs_range, val_loss, label='Testing Loss')
 plt.legend(loc='upper right')
-plt.title('Training and Validation Loss')
-plt.show()
+plt.title('Training and Testing Loss')
+# plt.show()
+plt.savefig("test.png", bbox_inches="tight")
 
 
 # TODO : 
@@ -104,17 +106,17 @@ plt.show()
 
 # Once this is done try super large like 7 shapes type dataset
 # Evaluate the model on the test data using `evaluate`
-test_directory = "./datasets/test_size_t/"
+#test_directory = "./datasets/test_size_t/"
 
-ds_test = tf.keras.preprocessing.image_dataset_from_directory(
-    test_directory, 
-    labels = "inferred",
-    label_mode = "int",
-    color_mode = "grayscale",
-    batch_size = batch_size,
-    image_size = (img_height, img_width),
-)
+# ds_test = tf.keras.preprocessing.image_dataset_from_directory(
+  #  test_directory, 
+  #  labels = "inferred",
+   # label_mode = "int",
+   # color_mode = "grayscale",
+   # batch_size = batch_size,
+   # image_size = (img_height, img_width),
+#)
 
-print("Evaluate on test data")
-results = model.evaluate(ds_test)
-print("test loss, test acc:", results)
+# print("Evaluate on test data")
+# results = model.evaluate(ds_test)
+# print("test loss, test acc:", results)
