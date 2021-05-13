@@ -23,8 +23,8 @@ ds_train = tf.keras.preprocessing.image_dataset_from_directory(
     batch_size = batch_size,
     image_size = (img_height, img_width),
     shuffle = True,
-    seed = 3,
-    validation_split = 0.1,
+    seed = 33,
+    validation_split = 0.2,
     subset = "training"
 )
 
@@ -36,8 +36,8 @@ ds_validation = tf.keras.preprocessing.image_dataset_from_directory(
     batch_size = batch_size,
     image_size = (img_height, img_width),
     shuffle = True,
-    seed = 3,
-    validation_split = 0.1,
+    seed = 33,
+    validation_split = 0.2,
     subset = "validation"
 )
 
@@ -56,7 +56,7 @@ model = keras.Sequential([
   layers.Conv2D(64, 3, padding='same', activation='relu'),
   layers.MaxPooling2D(),
   layers.Flatten(),
-  layers.Dropout(0.4),
+  layers.Dropout(0.5),
   layers.Dense(128, activation='relu'),
   layers.Dense(64, activation="relu"),
   layers.Dense(num_classes, activation="softmax")
@@ -68,7 +68,7 @@ model.compile(optimizer=keras.optimizers.Adam(),
 
 model.summary()
 
-num_epochs = 20
+num_epochs = 15
 history = model.fit(
   ds_train,
   epochs=num_epochs,
@@ -96,4 +96,4 @@ plt.plot(epochs_range, loss, label='Training Loss')
 plt.plot(epochs_range, val_loss, label='Testing Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Testing Loss')
-plt.savefig("loss_accuracy_plots.png", bbox_inches="tight")
+plt.savefig("loss_accuracy_plots_3.png", bbox_inches="tight")
