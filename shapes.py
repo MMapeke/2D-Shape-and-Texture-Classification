@@ -49,8 +49,8 @@ class AbstractShape(ABC):
         self.set_shape_color()
 
         # Set Shape Size/Perimeter
-        # self.radius = np.random.randint(10, 75)
-        self.radius = 40
+        self.radius = np.random.randint(20, 75)
+        # self.radius = 40
 
         # Set Shape Rotation
         self.rotation = np.deg2rad(np.random.randint(-180, 180))
