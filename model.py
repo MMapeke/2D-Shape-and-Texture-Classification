@@ -68,7 +68,7 @@ model.compile(optimizer=keras.optimizers.Adam(),
 
 model.summary()
 
-num_epochs = 7
+num_epochs = 20
 history = model.fit(
   ds_train,
   epochs=num_epochs,
@@ -96,27 +96,4 @@ plt.plot(epochs_range, loss, label='Training Loss')
 plt.plot(epochs_range, val_loss, label='Testing Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Testing Loss')
-# plt.show()
-plt.savefig("test.png", bbox_inches="tight")
-
-
-# TODO : 
-# play with custom model + regularization type stuff, then transfer learning with other classic models
-# look into visualizing misclassified + other accuracy metrics
-
-# Once this is done try super large like 7 shapes type dataset
-# Evaluate the model on the test data using `evaluate`
-#test_directory = "./datasets/test_size_t/"
-
-# ds_test = tf.keras.preprocessing.image_dataset_from_directory(
-  #  test_directory, 
-  #  labels = "inferred",
-   # label_mode = "int",
-   # color_mode = "grayscale",
-   # batch_size = batch_size,
-   # image_size = (img_height, img_width),
-#)
-
-# print("Evaluate on test data")
-# results = model.evaluate(ds_test)
-# print("test loss, test acc:", results)
+plt.savefig("loss_accuracy_plots.png", bbox_inches="tight")
