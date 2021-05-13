@@ -13,7 +13,7 @@ img_height = img_width = 200
 batch_size = 15
 
 # Use dataset from directory
-directory = "./datasets/three_shapes_size_t/"
+directory = "./datasets/six_shapes_t/"
 
 ds_train = tf.keras.preprocessing.image_dataset_from_directory(
     directory, 
@@ -96,4 +96,4 @@ plt.plot(epochs_range, loss, label='Training Loss')
 plt.plot(epochs_range, val_loss, label='Testing Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Testing Loss')
-plt.savefig("loss_accuracy_plots_3.png", bbox_inches="tight")
+plt.savefig("loss_accuracy_plots_large_0.png", bbox_inches="tight")

@@ -160,6 +160,18 @@ class Square(AbstractPolygonShape):
 
     number_of_vertices = 4
 
+class Pentagon(AbstractPolygonShape):
+
+    number_of_vertices = 5
+
+class Hexagon(AbstractPolygonShape):
+
+    number_of_vertices = 6
+
+class Heptagon(AbstractPolygonShape):
+
+    number_of_vertices = 7
+
 class Circle(AbstractShape):
 
     def draw(self):

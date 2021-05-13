@@ -8,7 +8,10 @@ class ShapeGenerator:
     GENERATOR_CLASSES = [
         shapes.Circle,
         shapes.Triangle,
-        shapes.Square
+        shapes.Square,
+        shapes.Pentagon,
+        shapes.Hexagon,
+        shapes.Heptagon
     ]
 
     def __init__(self,destination,num_images):
