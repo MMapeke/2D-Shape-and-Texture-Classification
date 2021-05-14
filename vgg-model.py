@@ -11,10 +11,10 @@ from tensorflow.python.keras.applications.vgg19 import preprocess_input
 # print(tf.__version__) # Have to use at least tf 2.3
 
 img_height = img_width = 224
-batch_size = 15
+batch_size = 25
 
 # Use dataset from directory
-directory = "./datasets/six_shapes_t/"
+directory = "./datasets/three_shapes_size_t/"
 
 ds_train = tf.keras.preprocessing.image_dataset_from_directory(
     directory, 
@@ -71,7 +71,7 @@ model.compile(optimizer=keras.optimizers.Adam(),
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
-num_epochs = 20
+num_epochs = 7
 history = model.fit(
   ds_train,
   epochs=num_epochs,
@@ -99,5 +99,5 @@ plt.plot(epochs_range, loss, label='Training Loss')
 plt.plot(epochs_range, val_loss, label='Testing Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Testing Loss')
-plt.show()
-# plt.savefig("loss_accuracy_plots.png", bbox_inches="tight")
+# plt.show()
+plt.savefig("vgg_model.png", bbox_inches="tight")
