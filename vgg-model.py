@@ -12,7 +12,7 @@ img_height = img_width = 224
 batch_size = 25
 
 # Use dataset from directory
-directory = "./datasets/three_shapes_size_t/"
+directory = "./datasets/six_shapes_t/"
 
 ds_train = tf.keras.preprocessing.image_dataset_from_directory(
     directory, 
