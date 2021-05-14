@@ -13,7 +13,7 @@ img_height = img_width = 200
 batch_size = 15
 
 # Use dataset from directory
-directory = "./datasets/six_shapes_t/"
+directory = "./datasets/three_shapes_size_t/"
 
 ds_train = tf.keras.preprocessing.image_dataset_from_directory(
     directory, 
@@ -44,56 +44,67 @@ ds_validation = tf.keras.preprocessing.image_dataset_from_directory(
 class_names = ds_train.class_names 
 # print(class_names)
 
-num_classes = len(class_names)
+# Visualization Code
+# plt.figure(figsize=(10, 10))
+# for images, labels in ds_train.take(1):
+#   for i in range(9):
+#     ax = plt.subplot(3, 3, i + 1)
+#     plt.imshow(images[i].numpy().astype("uint8"),cmap="gray")
+#     plt.title(class_names[labels[i]])
+#     plt.axis("off")
 
-# Custom Model
-model = keras.Sequential([
-  layers.experimental.preprocessing.Rescaling(1./255, input_shape=(img_height, img_width, 1)),
-  layers.Conv2D(16, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Conv2D(32, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Conv2D(64, 3, padding='same', activation='relu'),
-  layers.MaxPooling2D(),
-  layers.Flatten(),
-  layers.Dropout(0.5),
-  layers.Dense(128, activation='relu'),
-  layers.Dense(64, activation="relu"),
-  layers.Dense(num_classes, activation="softmax")
-])
+# plt.show()
 
-model.compile(optimizer=keras.optimizers.Adam(),
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-              metrics=['accuracy'])
+# num_classes = len(class_names)
 
-model.summary()
+# # Custom Model
+# model = keras.Sequential([
+#   layers.experimental.preprocessing.Rescaling(1./255, input_shape=(img_height, img_width, 1)),
+#   layers.Conv2D(16, 3, padding='same', activation='relu'),
+#   layers.MaxPooling2D(),
+#   layers.Conv2D(32, 3, padding='same', activation='relu'),
+#   layers.MaxPooling2D(),
+#   layers.Conv2D(64, 3, padding='same', activation='relu'),
+#   layers.MaxPooling2D(),
+#   layers.Flatten(),
+#   layers.Dropout(0.5),
+#   layers.Dense(128, activation='relu'),
+#   layers.Dense(64, activation="relu"),
+#   layers.Dense(num_classes, activation="softmax")
+# ])
 
-num_epochs = 15
-history = model.fit(
-  ds_train,
-  epochs=num_epochs,
-  verbose=2,
-  validation_data=ds_validation
-)
+# model.compile(optimizer=keras.optimizers.Adam(),
+#               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+#               metrics=['accuracy'])
 
-acc = history.history['accuracy']
-val_acc = history.history['val_accuracy']
+# model.summary()
 
-loss = history.history['loss']
-val_loss = history.history['val_loss']
+# num_epochs = 15
+# history = model.fit(
+#   ds_train,
+#   epochs=num_epochs,
+#   verbose=2,
+#   validation_data=ds_validation
+# )
 
-epochs_range = range(num_epochs)
+# acc = history.history['accuracy']
+# val_acc = history.history['val_accuracy']
 
-plt.figure(figsize=(8, 8))
-plt.subplot(1, 2, 1)
-plt.plot(epochs_range, acc, label='Training Accuracy')
-plt.plot(epochs_range, val_acc, label='Testing Accuracy')
-plt.legend(loc='lower right')
-plt.title('Training and Testing Accuracy')
+# loss = history.history['loss']
+# val_loss = history.history['val_loss']
 
-plt.subplot(1, 2, 2)
-plt.plot(epochs_range, loss, label='Training Loss')
-plt.plot(epochs_range, val_loss, label='Testing Loss')
-plt.legend(loc='upper right')
-plt.title('Training and Testing Loss')
-plt.savefig("loss_accuracy_plots_large_0.png", bbox_inches="tight")
+# epochs_range = range(num_epochs)
+
+# plt.figure(figsize=(8, 8))
+# plt.subplot(1, 2, 1)
+# plt.plot(epochs_range, acc, label='Training Accuracy')
+# plt.plot(epochs_range, val_acc, label='Testing Accuracy')
+# plt.legend(loc='lower right')
+# plt.title('Training and Testing Accuracy')
+
+# plt.subplot(1, 2, 2)
+# plt.plot(epochs_range, loss, label='Training Loss')
+# plt.plot(epochs_range, val_loss, label='Testing Loss')
+# plt.legend(loc='upper right')
+# plt.title('Training and Testing Loss')
+# plt.savefig("loss_accuracy_plots_large_0.png", bbox_inches="tight")
