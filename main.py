@@ -34,10 +34,5 @@ def main():
         
         texture_gen.generate_textures(img, f1, textures, t_names, destination_textured)
 
-    # Learning and Classification
-    # TODO:
-    # - Play w/ Smaller Dataset, Shape Randomized
-    # - check out visualizations + test set or something
-
 if __name__ == '__main__':
     main()
