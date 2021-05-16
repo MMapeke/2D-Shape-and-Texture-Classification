@@ -1,3 +1,4 @@
+from logging import error
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -7,7 +8,20 @@ import tensorflow as tf
 from tensorflow import keras 
 from tensorflow.keras import layers
 
-# print(tf.__version__) # Have to use at least tf 2.3
+# print(tf.__version__) # Have to use at least tf 2.4
+
+# ADDING CHECKPOINT FOR MODEL
+checkpoint_path = "./checkpoints/resnet/"
+checkpoint_dir = os.path.dirname(checkpoint_path)
+
+# Create a callback that saves the model's weights
+cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
+                                                 save_weights_only=True,
+                                                 save_best_only=True,
+                                                 metrics=['val_accuracy'],
+                                                 verbose=1)
+
+# Loading Data and Configuring Model                                      
 
 img_height = img_width = 224
 batch_size = 25
@@ -52,7 +66,7 @@ preprocess_input = keras.applications.resnet_v2.preprocess_input
 
 resnet_model = keras.applications.ResNet50V2(input_shape = [img_height,img_width,3], weights="imagenet", include_top=False)
 resnet_model.trainable = False 
-resnet_model.summary()
+# resnet_model.summary()
 
 inputs = keras.Input(shape=(img_height,img_width,3))
 x = preprocess_input(inputs)
@@ -75,7 +89,8 @@ history = model.fit(
   ds_train,
   epochs=num_epochs,
   verbose=2,
-  validation_data=ds_validation
+  validation_data=ds_validation,
+  callbacks=[cp_callback]
 )
 
 acc = history.history['accuracy']
@@ -100,3 +115,16 @@ plt.legend(loc='upper right')
 plt.title('Training and Testing Loss')
 # plt.show()
 plt.savefig("resnet_model.png", bbox_inches="tight")
+
+# #Finding misclassified images
+# file_paths = ds_validation.file_paths
+
+# y_prediction = model.predict(ds_validation)
+# y_prediction_class = np.argmax(y_prediction, axis=1)
+# y_true = np.concatenate([y for x, y in ds_validation], axis=0)
+# errors = np.where(y_prediction_class != y_true)
+# print(type(errors))
+# print(len(errors))
+
+# # TODO: check if class names and model stuff is matching, make visualizer
+# # TODO: save best model weights in gcp using checkpoint
